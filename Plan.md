@@ -69,12 +69,12 @@
 
 ### Чек-лист проверок приложения
 
-Можно найти [здесь](https://github.com/ElizavetaShkryabiy/hospis-mobile-app-tests/blob/7632f997e5b8000c2b157f62b252d1656a02960d/Check.xlsx)
+Можно найти [здесь](https://github.com/ElizavetaShkryabiy/diploma/blob/development/Check.xlsx)
 
 ### Тест-кейсы приложения
 
-Можно найти [здесь](https://github.com/ElizavetaShkryabiy/hospis-mobile-app-tests/blob/7632f997e5b8000c2b157f62b252d1656a02960d/Cases.xlsx)
+Можно найти [здесь](https://github.com/ElizavetaShkryabiy/diploma/blob/development/Cases.xlsx)
 
 ### Отчет по проверкам приложения
 
-Можно найти [здесь](https://github.com/ElizavetaShkryabiy/hospis-mobile-app-tests/blob/7632f997e5b8000c2b157f62b252d1656a02960d/Result.md)
+Можно найти [здесь](https://github.com/ElizavetaShkryabiy/diploma/blob/development/Result.md)
