@@ -1,4 +1,4 @@
-package ru.iteco.fmhandroid.ui;
+package ru.iteco.fmhandroid.ui.pages;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -6,7 +6,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
-import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -29,236 +28,21 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import ru.iteco.fmhandroid.R;
+import ru.iteco.fmhandroid.ui.data.MethodsClass;
 
-public class MethodsClass {
-    static int number = 0;
+public class ClaimsPage {
 
-    public static String getToday() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        Date date = new Date();
-        String today = formatter.format(date).toString();
-        return (today);
+    static MethodsClass methods = new MethodsClass();
+    static String today = methods.getToday();
+
+    public static void getClaimsPagesObjects(){
+        onView(allOf(withId(R.id.add_new_claim_material_button))).check(matches(isDisplayed()));
+        onView(allOf(withParent(allOf(withId(R.id.claim_list_card))))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.claim_list_card))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.claim_list_recycler_view))).check(matches(isDisplayed()));
+        onView(allOf(withId(R.id.all_claims_cards_block_constraint_layout))).check(matches(isDisplayed()));
     }
-
-    public static int getTestNumber() {
-        number = number + 1;
-        return number;
-    }
-
-    public static void chooseMenuItem(String item) {
-        onView(allOf(withId(R.id.main_menu_image_button)))
-                .check(matches(isDisplayed()))
-                .perform(click());
-
-        onView(allOf(withId(android.R.id.title), withText(item)))
-                .check(matches(isDisplayed()))
-                .check(matches(withText(item)))
-                .perform(click());
-        onView(allOf(withText(item),
-                withParent(withParent(withId(R.id.container_list_news_include)))))
-                .check(matches(isDisplayed()))
-                .check(matches(withText(item)));
-
-    }
-
-    //    news page methods
-    public static void openNewsWindow() {
-        onView(allOf(withId(R.id.filter_news_material_button))).check(matches(isDisplayed())).perform(click());
-        onView(allOf(withId(R.id.filter_news_title_text_view))).check(matches(withText("Filter news")));
-        onView(allOf(withId(R.id.news_item_category_text_auto_complete_text_view))).check(matches(isDisplayed()));
-
-        onView(allOf(withId(R.id.filter_button))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.cancel_button))).check(matches(isDisplayed())).perform(click());
-        onView(allOf(withText("News"),
-                withParent(withParent(withId(R.id.container_list_news_include))),
-                isDisplayed())).check(matches(withText("News")));
-    }
-
-    public static void controlPanelElementsDisplayed() {
-        onView(allOf(withText("Control panel"))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.sort_news_material_button))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.filter_news_material_button))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.add_news_image_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.news_item_material_card_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.category_icon_image_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.news_item_title_text_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.news_item_publication_text_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.news_item_publication_date_text_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.news_item_creation_text_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.news_item_create_date_text_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.news_item_author_text_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.news_item_author_name_text_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.news_item_published_icon_image_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.delete_news_item_image_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.edit_news_item_image_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.view_news_item_image_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.news_list_recycler_view))).perform(actionOnItemAtPosition(0, click()));
-        onView(allOf(withId(R.id.news_item_description_text_view))).check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.delete_news_item_image_view))).perform(click());
-    }
-
-    public static void filterNews(String category) {
-        openNewsWindow();
-
-        onView(allOf(withId(R.id.news_item_category_text_auto_complete_text_view))).perform(click());
-        onData(anything())
-                .inAdapterView(childAtPosition(
-                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
-                        0))
-                .atPosition(5).perform(click());
-
-        onView(allOf(withId(R.id.news_item_category_text_auto_complete_text_view), withText(category)))
-                .check(matches(withText(category)));
-
-        onView(allOf(withId(R.id.news_item_publish_date_start_text_input_edit_text))).perform(click());
-
-        ViewInteraction okButton = onView(
-                allOf(withId(android.R.id.button1))).perform(scrollTo(), click());
-
-        onView(allOf(withId(R.id.news_item_publish_date_end_text_input_edit_text))).perform(click());
-
-        okButton.perform(scrollTo(), click());
-
-        onView(allOf(withId(R.id.filter_button))).perform(click());
-
-        onView(allOf(withId(R.id.filter_button))).check(matches(isDisplayed())).perform(click());
-        onView(allOf(withId(R.id.news_list_recycler_view))).perform(actionOnItemAtPosition(3, click()));
-        onView(allOf(withId(R.id.news_item_title_text_view))).check(matches(isDisplayed()));
-    }
-
-
-    public static void fillAuthFormFields(String login, String password) {
-        onView(allOf(withId(R.id.login_text_input_layout))).perform(replaceText(login));
-        onView(allOf(withId(R.id.password_text_input_layout))).perform(click())
-                .perform(typeText(password), closeSoftKeyboard());
-        onView(allOf(withId(R.id.enter_button))).perform(click());
-    }
-
-    public static void newsItemCheck(int testNumberT, String date, int testNumberD, boolean flagS) {
-        String state;
-        onView(allOf(withId(R.id.news_item_title_text_view)))
-                .check(matches(isDisplayed()))
-                .check(matches(withText("Birthday test n " + testNumberT)));
-
-        onView(allOf(withId(R.id.news_item_publication_date_text_view)))
-                .check(matches(isDisplayed()))
-                .check(matches(withText(date)));
-        if (flagS == true) {
-            state = "ACTIVE";
-        } else {
-            state = "NOT ACTIVE";
-        }
-
-        onView(allOf(withId(R.id.news_item_published_text_view)))
-                .check(matches(isDisplayed()))
-                .check(matches(withText(state)));
-
-        onView(allOf(withId(R.id.news_item_description_text_view)))
-                .check(matches(isDisplayed()))
-                .check(matches(withText("Description for birthday test next " + testNumberD)));
-    }
-
-    public static void createNewNewsItem(Integer testNumber) {
-        onView(allOf(withId(R.id.add_news_image_view))).perform(click());
-        onView(allOf(withId(R.id.custom_app_bar_title_text_view)))
-                .check(matches(isDisplayed()))
-                .check(matches(withText("Creating")));
-        onView(allOf(withId(R.id.custom_app_bar_sub_title_text_view)))
-                .check(matches(isDisplayed()))
-                .check(matches(withText("News")));
-        ViewInteraction category = onView(allOf(withId(R.id.news_item_category_text_auto_complete_text_view)))
-                .check(matches(isDisplayed()))
-                .check(matches(withText("Category")));
-        ViewInteraction title = onView(allOf(withId(R.id.news_item_title_text_input_edit_text)))
-                .check(matches(isDisplayed()))
-                .check(matches(withText("Title")));
-        ViewInteraction date = onView(allOf(withId(R.id.news_item_publish_date_text_input_edit_text)))
-                .check(matches(isDisplayed()))
-                .check(matches(withText("Publication date")));
-        ViewInteraction time = onView(allOf(withId(R.id.news_item_publish_time_text_input_edit_text)))
-                .check(matches(isDisplayed()))
-                .check(matches(withText("Time")));
-        ViewInteraction descriptionField = onView(allOf(withId(R.id.news_item_description_text_input_edit_text)))
-                .check(matches(isDisplayed()))
-                .check(matches(withText("Description")));
-        ViewInteraction saveB = onView(allOf(withId(R.id.save_button)))
-                .check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.switcher)))
-                .check(matches(isDisplayed()));
-        onView(allOf(withId(R.id.cancel_button)))
-                .check(matches(isDisplayed()));
-
-        category.perform(click());
-        onData(anything())
-                .inAdapterView(childAtPosition(
-                        withClassName(is("android.widget.PopupWindow$PopupBackgroundView")),
-                        0))
-                .atPosition(1).perform(click());
-
-        title.perform(replaceText("Birthday test n " + testNumber)).perform(closeSoftKeyboard());
-        date.perform(click());
-
-        ViewInteraction okB = onView(allOf(withId(android.R.id.button1)));
-        okB.perform(scrollTo(), click());
-
-        time.perform(click());
-        okB.perform(scrollTo(), click());
-
-        descriptionField.perform(replaceText("Description for birthday test n " + testNumber), closeSoftKeyboard());
-        saveB.perform(scrollTo(), click());
-
-        newsItemCheck(testNumber, getToday(), testNumber, true);
-
-    }
-
-    public static void editTitle(int testNumber) {
-        onView(allOf(withId(R.id.news_item_title_text_input_edit_text)))
-                .check(matches(isDisplayed()))
-                .perform(replaceText("Birthday test n " + testNumber))
-                .perform(closeSoftKeyboard());
-    }
-
-    public static void editDescription(int testNumber) {
-        onView(allOf(withId(R.id.news_item_description_text_input_edit_text)))
-                .check(matches(isDisplayed()))
-                .perform(replaceText("Description for birthday test next " + testNumber))
-                .perform(closeSoftKeyboard());
-    }
-
-    public static void editState() {
-        onView(allOf(withId(R.id.switcher), withText("Active")))
-                .check(matches(isDisplayed()))
-                .perform(scrollTo(), click());
-    }
-
-    public static void editNewsItems(int testNumber, boolean flagT, boolean flagD, boolean flagS, boolean flagI) {
-        onView(allOf(withId(R.id.news_list_recycler_view))).perform(actionOnItemAtPosition(0, click()));
-        onView(allOf(withId(R.id.edit_news_item_image_view)))
-                .perform(click());
-        if (flagT == true) {
-            editTitle(testNumber);
-        }
-        if (flagD == true) {
-            editDescription(testNumber);
-        }
-        if (flagS == true) {
-            editState();
-        }
-        if (flagI == true) {
-            onView(allOf(withId(R.id.save_button))).perform(scrollTo(), click());
-        } else {
-            onView(allOf(withId(R.id.cancel_button))).perform(scrollTo(), click());
-            onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(scrollTo(), click());
-        }
-        newsItemCheck(testNumber, getToday(), testNumber, flagI);
-    }
-
-
-//    claims page methods
 
     public static void checkClaimStatus(String status) {
         onView(allOf(withId(R.id.claim_list_filter_ok_material_button), withText("OK"))).perform(scrollTo(), click());
@@ -349,7 +133,7 @@ public class MethodsClass {
                 .check(matches(withText(executor)));
         onView(allOf(withId(R.id.plane_date_text_view)))
                 .check(matches(isDisplayed()))
-                .check(matches(withText(getToday())));
+                .check(matches(withText(today)));
         onView(allOf(withId(R.id.status_label_text_view)))
                 .check(matches(isDisplayed()))
                 .check(matches(withText(status)));
@@ -373,9 +157,9 @@ public class MethodsClass {
                 allOf(withId(R.id.description_material_text_view), withText("Title for test number " + testNumber)))
                 .check(matches(isDisplayed()))
                 .check(matches(withText("Title for test number " + testNumber)));
-        onView(allOf(withId(R.id.plan_date_material_text_view), withText(getToday())))
+        onView(allOf(withId(R.id.plan_date_material_text_view), withText(today)))
                 .check(matches(isDisplayed()))
-                .check(matches(withText(getToday())));
+                .check(matches(withText(today)));
     }
 
 
@@ -472,6 +256,17 @@ public class MethodsClass {
         checkClaimData(newTestNumber, person, "Open");
     }
 
+    public void getErrorOnEmptyFields() {
+        onView(allOf(withId(R.id.add_new_claim_material_button)))
+                .check(matches(isDisplayed()))
+                .perform(click());
+        onView(allOf(withId(R.id.save_button)))
+                .check(matches(isDisplayed()))
+                .perform(click());
+        onView(allOf(withId(android.R.id.message))).check(matches(withText("Fill empty fields")));
+        onView(allOf(withId(android.R.id.button1))).perform(scrollTo(), click());
+    }
+
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
 
@@ -490,5 +285,4 @@ public class MethodsClass {
             }
         };
     }
-
 }
