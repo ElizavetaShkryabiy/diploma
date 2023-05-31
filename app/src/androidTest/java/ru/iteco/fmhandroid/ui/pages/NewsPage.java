@@ -127,7 +127,7 @@ public class NewsPage {
         onView(allOf(withId(R.id.news_item_title_text_view))).check(matches(isDisplayed()));
     }
 
-    public static void newsItemCheck(int testNumberT, String date, int testNumberD, boolean flagS) {
+    public static void newsItemCheck(int testNumberT, String date, int testNumberD, boolean active) {
         String state;
         onView(allOf(withId(R.id.news_item_title_text_view)))
                 .check(matches(isDisplayed()))
@@ -136,7 +136,7 @@ public class NewsPage {
         onView(allOf(withId(R.id.news_item_publication_date_text_view)))
                 .check(matches(isDisplayed()))
                 .check(matches(withText(date)));
-        if (flagS == true) {
+        if (active == true) {
             state = "ACTIVE";
         } else {
             state = "NOT ACTIVE";
@@ -224,27 +224,27 @@ public class NewsPage {
                 .perform(scrollTo(), click());
     }
 
-    public static void editNewsItems(int testNumber, boolean flagT, boolean flagD, boolean flagS, boolean flagI) {
+    public static void editNewsItems(int testNumber, boolean editTitle, boolean descriptionEdit, boolean active, boolean editNews) {
 
         onView(allOf(withId(R.id.news_list_recycler_view))).perform(actionOnItemAtPosition(0, click()));
         onView(allOf(withId(R.id.edit_news_item_image_view)))
                 .perform(click());
-        if (flagT == true) {
+        if (editTitle == true) {
             editTitle(testNumber);
         }
-        if (flagD == true) {
+        if (descriptionEdit == true) {
             editDescription(testNumber);
         }
-        if (flagS == true) {
+        if (active == true) {
             editState();
         }
-        if (flagI == true) {
+        if (editNews == true) {
             onView(allOf(withId(R.id.save_button))).perform(scrollTo(), click());
         } else {
             onView(allOf(withId(R.id.cancel_button))).perform(scrollTo(), click());
             onView(allOf(withId(android.R.id.button1), withText("OK"))).perform(scrollTo(), click());
         }
-        newsItemCheck(testNumber, today, testNumber, flagI);
+        newsItemCheck(testNumber, today, testNumber, editNews);
     }
 
 

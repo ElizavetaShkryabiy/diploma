@@ -118,12 +118,12 @@ public class ClaimsPage {
         cancelB.check(matches(isDisplayed()));
     }
 
-    public static void checkClaimData(int testNumber, boolean flagExecutor, String status) {
+    public static void checkClaimData(int testNumber, boolean fillExecutor, String status) {
         onView(allOf(withId(R.id.title_text_view)))
                 .check(matches(isDisplayed()))
                 .check(matches(withText("Title for test number " + testNumber)));
         String executor;
-        if (flagExecutor == true) {
+        if (fillExecutor == true) {
             executor = "Ivanov Ivan Ivanovich";
         } else {
             executor = "NOT ASSIGNED";
@@ -238,14 +238,14 @@ public class ClaimsPage {
         onView(allOf(withId(R.id.status_processing_image_button))).perform(click());
     }
 
-    public static void editClaim(int testNumber, int newTestNumber, boolean person, boolean flagCancelled) {
+    public static void editClaim(int testNumber, int newTestNumber, boolean person, boolean cancelled) {
         checkClaimData(testNumber, person, "Open");
         onView(allOf(withId(R.id.edit_processing_image_button)))
                 .check(matches(isDisplayed()));
         checkFieldsOnCreateClaimPagePresent();
         title.perform(replaceText("Title for test number " + testNumber), closeSoftKeyboard());
         description.perform(replaceText("Description for test number " + testNumber), closeSoftKeyboard());
-        if (flagCancelled == true) {
+        if (cancelled == true) {
             cancelB.check(matches(isDisplayed()))
                     .perform(click());
             onView(allOf(withId(android.R.id.button1))).perform(scrollTo(), click());
