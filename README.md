@@ -6,6 +6,9 @@
 4. В левом верхнем углу выбрать формат отображения проекта - Tests
 5. Кликнуть на директорию app.scr.androidTest правой кнопкой мыши, выбрать элемент меню - Run All Tests
 
+ИЛИ
+4. Ввести в командной строке команду ./gradlew connectedAndroidTest
+
 ### План тестирования
 
 Можно найти [здесь](https://github.com/ElizavetaShkryabiy/diploma/blob/development/Plan.md)
