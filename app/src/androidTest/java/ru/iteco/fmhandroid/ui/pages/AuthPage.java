@@ -16,8 +16,8 @@ import ru.iteco.fmhandroid.R;
 public class AuthPage {
 
     public static void fillAuthFormFields(String login, String password) {
-        onView(allOf(withId(R.id.login_text_input_layout))).perform(replaceText(login));
-        onView(allOf(withId(R.id.password_text_input_layout))).perform(click())
+        onView(allOf(withId(R.id.login_text_input_edit))).perform(replaceText(login));
+        onView(allOf(withId(R.id.password_text_input_edit))).perform(click())
                 .perform(typeText(password), closeSoftKeyboard());
         onView(allOf(withId(R.id.enter_button))).perform(click());
 
