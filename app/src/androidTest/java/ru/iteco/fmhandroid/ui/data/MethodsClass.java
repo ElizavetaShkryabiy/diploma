@@ -86,11 +86,11 @@ public class MethodsClass {
         onView(allOf(withId(R.id.main_menu_image_button)))
                 .check(matches(isDisplayed()))
                 .perform(click());
-
         onView(allOf(withId(android.R.id.title), withText(item)))
                 .check(matches(isDisplayed()))
                 .check(matches(withText(item)))
                 .perform(click());
+        onView(isRoot()).perform(waitId(R.id.container_list_news_include, 3000));
         onView(allOf(withText(item),
                 withParent(withParent(withId(R.id.container_list_news_include)))))
                 .check(matches(isDisplayed()))

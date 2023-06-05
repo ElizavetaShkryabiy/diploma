@@ -1,8 +1,10 @@
 package ru.iteco.fmhandroid.ui.pages;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -91,12 +93,10 @@ public class AuthPage {
     public static void logOut() {
         onView(isRoot()).perform(waitId(R.id.authorization_image_button, 5000));
         onView(allOf(withId(R.id.authorization_image_button))).perform(click());
-//        onView(isRoot()).perform(waitId(R.id.authorization_logout_menu_item, 5000));
-//        onView(allOf(withId(android.R.id.title), withText("Log out")))
-//                .noActivity()
-//                .perform(click());
-        onView(allOf(withId(R.id.authorization_logout_menu_item))).perform(click());
-        onView(isRoot()).perform(waitId(R.id.auth_page_header, 5000));
+        onView(isRoot()).perform(waitId(R.id.authorization_logout_menu_item, 1000));
+        onData(allOf(withId(R.id.authorization_logout_menu_item)))
+                .perform(longClick());
+        onView(isRoot()).perform(waitId(R.id.auth_page_header, 3000));
         onView(allOf(withId(R.id.auth_page_header))).check(matches(isDisplayed()));
     }
 }

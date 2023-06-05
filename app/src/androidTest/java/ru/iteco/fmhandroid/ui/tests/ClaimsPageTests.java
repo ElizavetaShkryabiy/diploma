@@ -1,22 +1,20 @@
 package ru.iteco.fmhandroid.ui.tests;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import ru.iteco.fmhandroid.ui.AppActivity;
 import ru.iteco.fmhandroid.ui.data.MethodsClass;
 import ru.iteco.fmhandroid.ui.pages.AuthPage;
 import ru.iteco.fmhandroid.ui.pages.ClaimsPage;
 
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(AllureAndroidJUnit4.class)
 public class ClaimsPageTests {
 
     MethodsClass methods = new MethodsClass();
@@ -37,14 +35,14 @@ public class ClaimsPageTests {
     public ActivityScenarioRule<AppActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(AppActivity.class);
 
-    @Before
-    public void login() {
-        authPage.fillAuthFormFields("login2", "password2", "Dashboard");
-    }
-    @After
-    public void logOut() {
-        authPage.logOut();
-    }
+//    @Before
+//    public void login() {
+//        authPage.fillAuthFormFields("login2", "password2", "Dashboard");
+//    }
+//    @After
+//    public void logOut() {
+//        authPage.logOut();
+//    }
 
     @Test
     public void claimsPageItemsDisplayedTest() {
