@@ -7,26 +7,96 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
+import android.view.View;
+
+import androidx.test.espresso.PerformException;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.util.HumanReadables;
+import androidx.test.espresso.util.TreeIterables;
+
+import org.hamcrest.Matcher;
+
+import java.util.concurrent.TimeoutException;
+
 import ru.iteco.fmhandroid.R;
 
 public class AuthPage {
+    public static ViewAction waitId(final int viewId, final long millis) {
+        return new ViewAction() {
+            @Override
+            public Matcher<View> getConstraints() {
+                return isRoot();
+            }
 
-    public static void fillAuthFormFields(String login, String password) {
+            @Override
+            public String getDescription() {
+                return "wait for a specific view with id <" + viewId + "> during " + millis + " millis.";
+            }
+
+            @Override
+            public void perform(final UiController uiController, final View view) {
+                uiController.loopMainThreadUntilIdle();
+                final long startTime = System.currentTimeMillis();
+                final long endTime = startTime + millis;
+                final Matcher<View> viewMatcher = withId(viewId);
+
+                do {
+                    for (View child : TreeIterables.breadthFirstViewTraversal(view)) {
+                        // found view with required ID
+                        if (viewMatcher.matches(child)) {
+                            return;
+                        }
+                    }
+
+                    uiController.loopMainThreadForAtLeast(50);
+                }
+                while (System.currentTimeMillis() < endTime);
+
+                // timeout happens
+                throw new PerformException.Builder()
+                        .withActionDescription(this.getDescription())
+                        .withViewDescription(HumanReadables.describe(view))
+                        .withCause(new TimeoutException())
+                        .build();
+            }
+        };
+    }
+
+    public static void fillAuthFormFields(String login, String password, String result) {
+        onView(isRoot()).perform(waitId(R.id.login_text_input_edit, 15000));
+        onView(isRoot()).perform(waitId(R.id.password_text_input_edit, 15000));
+        onView(isRoot()).perform(waitId(R.id.enter_button, 5000));
         onView(allOf(withId(R.id.login_text_input_edit))).perform(replaceText(login));
         onView(allOf(withId(R.id.password_text_input_edit))).perform(click())
                 .perform(typeText(password), closeSoftKeyboard());
         onView(allOf(withId(R.id.enter_button))).perform(click());
+        checkDisplayed(result);
+    }
 
-        onView(allOf(withId(R.id.trademark_image_view))).check(matches(isDisplayed()));
+    public static void checkDisplayed(String view) {
+        if (view == "Dashboard") {
+            onView(isRoot()).perform(waitId(R.id.trademark_image_view, 15000));
+            onView(allOf(withId(R.id.trademark_image_view))).check(matches(isDisplayed()));
+        } else {
+            onView(allOf(withText("Authorization"))).check(matches(withText("Authorization")));
+        }
     }
 
     public static void logOut() {
+        onView(isRoot()).perform(waitId(R.id.authorization_image_button, 5000));
         onView(allOf(withId(R.id.authorization_image_button))).perform(click());
-        onView(allOf(withId(android.R.id.title), withText("Log out"))).perform(click());
-        onView(allOf(withText("Authorization"))).check(matches(withText("Authorization")));
+//        onView(isRoot()).perform(waitId(R.id.authorization_logout_menu_item, 5000));
+//        onView(allOf(withId(android.R.id.title), withText("Log out")))
+//                .noActivity()
+//                .perform(click());
+        onView(allOf(withId(R.id.authorization_logout_menu_item))).perform(click());
+        onView(isRoot()).perform(waitId(R.id.auth_page_header, 5000));
+        onView(allOf(withId(R.id.auth_page_header))).check(matches(isDisplayed()));
     }
 }

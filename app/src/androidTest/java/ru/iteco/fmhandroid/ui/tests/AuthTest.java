@@ -18,37 +18,33 @@ public class AuthTest {
             new ActivityScenarioRule<>(AppActivity.class);
 
     @Test
-    public void EmptyLoginErrorTest() {
-        authPage.fillAuthFormFields("","password2");
+    public void emptyLoginErrorTest() {
+        authPage.fillAuthFormFields("", "password2", "nada");
     }
 
     @Test
-    public void SpaceLoginErrorTest() {
-        authPage.fillAuthFormFields("  ","password2");
+    public void spaceLoginErrorTest() {
+        authPage.fillAuthFormFields("  ", "password2", "nada");
     }
 
     @Test
-    public void NonExistingLoginErrorTest() {
-        authPage.fillAuthFormFields("sfjksdsusfjsd","password2");
+    public void nonExistingLoginErrorTest() {
+        authPage.fillAuthFormFields("sfjksdsusfjsd", "password2", "nada");
     }
 
     @Test
-    public void WrongPasswordErrorTest() {
-        authPage.fillAuthFormFields("login2","pass");
+    public void wrongPasswordErrorTest() {
+        authPage.fillAuthFormFields("login2", "pass", "nada");
     }
 
     @Test
-    public void EmptyPasswordErrorTest() {
-        authPage.fillAuthFormFields("login2","");
+    public void emptyPasswordErrorTest() {
+        authPage.fillAuthFormFields("login2", "", "nada");
     }
 
     @Test
-    public void LogInOKTest() {
-        authPage.fillAuthFormFields("login2","password2");
-    }
-    @Test
-    public void LogOutOKTest() {
-        authPage.fillAuthFormFields("login2","password2");
+    public void logInAndOutOKTest() {
+        authPage.fillAuthFormFields("login2", "password2", "Dashboard");
         authPage.logOut();
     }
 }
