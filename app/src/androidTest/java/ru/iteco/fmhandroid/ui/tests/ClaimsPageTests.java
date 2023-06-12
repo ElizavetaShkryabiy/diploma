@@ -7,6 +7,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import io.qameta.allure.android.rules.ScreenshotRule;
 import io.qameta.allure.android.runners.AllureAndroidJUnit4;
 import ru.iteco.fmhandroid.ui.AppActivity;
 import ru.iteco.fmhandroid.ui.data.MethodsClass;
@@ -34,6 +35,10 @@ public class ClaimsPageTests {
     @Rule
     public ActivityScenarioRule<AppActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(AppActivity.class);
+    @Rule
+    private String screenshotName;
+    private ScreenshotRule.Mode mode;
+    ScreenshotRule logcatRule = new ScreenshotRule(mode = ScreenshotRule.Mode.END, screenshotName = "ss_end");
 
 //    @Before
 //    public void login() {
