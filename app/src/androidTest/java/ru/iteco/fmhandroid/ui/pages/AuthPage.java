@@ -26,6 +26,7 @@ import org.hamcrest.Matcher;
 
 import java.util.concurrent.TimeoutException;
 
+import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
 
 public class AuthPage {
@@ -71,6 +72,7 @@ public class AuthPage {
     }
 
     public static void fillAuthFormFields(String login, String password, String result) {
+        Allure.step("заполнить поля");
         onView(isRoot()).perform(waitId(R.id.login_text_input_edit, 15000));
         onView(isRoot()).perform(waitId(R.id.password_text_input_edit, 15000));
         onView(isRoot()).perform(waitId(R.id.enter_button, 5000));
@@ -82,6 +84,7 @@ public class AuthPage {
     }
 
     public static void checkDisplayed(String view) {
+        Allure.step("все видно");
         if (view == "Dashboard") {
             onView(isRoot()).perform(waitId(R.id.trademark_image_view, 15000));
             onView(allOf(withId(R.id.trademark_image_view))).check(matches(isDisplayed()));
@@ -91,6 +94,7 @@ public class AuthPage {
     }
 
     public static void logOut() {
+        Allure.step("логаут");
         onView(isRoot()).perform(waitId(R.id.authorization_image_button, 5000));
         onView(allOf(withId(R.id.authorization_image_button))).perform(click());
         onView(isRoot()).perform(waitId(R.id.authorization_logout_menu_item, 1000));

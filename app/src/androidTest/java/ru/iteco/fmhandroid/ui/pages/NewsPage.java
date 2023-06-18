@@ -38,6 +38,7 @@ import org.hamcrest.TypeSafeMatcher;
 
 import java.util.concurrent.TimeoutException;
 
+import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
 import ru.iteco.fmhandroid.ui.data.MethodsClass;
 
@@ -86,6 +87,7 @@ public class NewsPage {
     static String today = methods.getToday();
 
     public static void getNewsPagesObjects(){
+        Allure.step("проверить элементы");
         onView(isRoot()).perform(waitId(R.id.sort_news_material_button, 5000));
         onView(allOf(withId(R.id.sort_news_material_button))).check(matches(isDisplayed()));
         onView(isRoot()).perform(waitId(R.id.filter_news_material_button, 5000));
@@ -103,6 +105,7 @@ public class NewsPage {
     }
 
     public static void sort(){
+        Allure.step("отсортировать");
         onView(isRoot()).perform(waitId(R.id.sort_news_material_button, 5000));
         onView(allOf(withId(R.id.sort_news_material_button), withContentDescription("Sort news list button")))
                 .check(matches(isDisplayed()))
@@ -112,12 +115,14 @@ public class NewsPage {
     }
 
     public static void filterButtonClick(){
+        Allure.step("открыть фильтры");
         onView(allOf(withText("News"),
                 withParent(withParent(withId(R.id.container_list_news_include))),
                 isDisplayed())).check(matches(withText("News")));
     }
 
     public static void openNewsWindow() {
+        Allure.step("открыть новость");
         onView(isRoot()).perform(waitId(R.id.filter_news_material_button, 5000));
         onView(allOf(withId(R.id.filter_news_material_button))).check(matches(isDisplayed())).perform(click());
         onView(isRoot()).perform(waitId(R.id.filter_news_title_text_view, 5000));
@@ -132,6 +137,7 @@ public class NewsPage {
     }
 
     public static void controlPanelElementsDisplayed() {
+        Allure.step("панель управления");
         onView(isRoot()).perform(waitId(R.id.edit_news_material_button, 5000));
         onView(allOf(withId(R.id.edit_news_material_button))).perform(click());
         onView(allOf(withText("Control panel"))).check(matches(isDisplayed()));
@@ -176,6 +182,7 @@ public class NewsPage {
     }
 
     public static void filterNews(String category) {
+        Allure.step("фильтр");
         openNewsWindow();
         onView(isRoot()).perform(waitId(R.id.news_item_category_text_auto_complete_text_view, 5000));
         onView(allOf(withId(R.id.news_item_category_text_auto_complete_text_view))).perform(click());
@@ -205,6 +212,7 @@ public class NewsPage {
     }
 
     public static void newsItemCheck(int testNumberT, String date, int testNumberD, boolean active) {
+        Allure.step("проверить эелементы");
         String state;
         onView(isRoot()).perform(waitId(R.id.news_item_title_text_view, 5000));
         onView(allOf(withId(R.id.news_item_title_text_view)))
@@ -230,6 +238,7 @@ public class NewsPage {
     }
 
     public static void createNewNewsItem(Integer testNumber) {
+        Allure.step("создать новость");
         onView(isRoot()).perform(waitId(R.id.add_news_image_view, 5000));
         onView(allOf(withId(R.id.add_news_image_view))).perform(click());
         onView(isRoot()).perform(waitId(R.id.custom_app_bar_title_text_view, 5000));
@@ -285,6 +294,7 @@ public class NewsPage {
     }
 
     public static void editTitle(int testNumber) {
+        Allure.step("изменить заголовок");
         onView(isRoot()).perform(waitId(R.id.news_item_title_text_input_edit_text, 5000));
         onView(allOf(withId(R.id.news_item_title_text_input_edit_text)))
                 .check(matches(isDisplayed()))
@@ -293,6 +303,7 @@ public class NewsPage {
     }
 
     public static void editDescription(int testNumber) {
+        Allure.step("изменить описание");
         onView(isRoot()).perform(waitId(R.id.news_item_description_text_input_edit_text, 5000));
         onView(allOf(withId(R.id.news_item_description_text_input_edit_text)))
                 .check(matches(isDisplayed()))
@@ -301,6 +312,7 @@ public class NewsPage {
     }
 
     public static void editState() {
+        Allure.step("изменить состояние");
         onView(isRoot()).perform(waitId(R.id.switcher, 5000));
         onView(allOf(withId(R.id.switcher), withText("Active")))
                 .check(matches(isDisplayed()))
@@ -308,6 +320,7 @@ public class NewsPage {
     }
 
     public static void editNewsItems(int testNumber, boolean editTitle, boolean descriptionEdit, boolean active, boolean editNews) {
+        Allure.step("редактировать новость");
         onView(isRoot()).perform(waitId(R.id.news_list_recycler_view, 5000));
         onView(allOf(withId(R.id.news_list_recycler_view))).perform(actionOnItemAtPosition(0, click()));
         onView(isRoot()).perform(waitId(R.id.edit_news_item_image_view, 5000));

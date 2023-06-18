@@ -18,8 +18,6 @@ public class AuthTest {
     public ActivityScenarioRule<AppActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(AppActivity.class);
     @Rule
-    private String screenshotName;
-    private ScreenshotRule.Mode mode;
     ScreenshotRule logcatRule = new ScreenshotRule(mode = ScreenshotRule.Mode.END, screenshotName = "ss_end");
 
     @Test

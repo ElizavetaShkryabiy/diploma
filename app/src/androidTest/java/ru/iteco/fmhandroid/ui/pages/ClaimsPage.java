@@ -36,6 +36,7 @@ import org.hamcrest.TypeSafeMatcher;
 
 import java.util.concurrent.TimeoutException;
 
+import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
 import ru.iteco.fmhandroid.ui.data.MethodsClass;
 
@@ -85,6 +86,7 @@ public class ClaimsPage {
     static String today = methods.getToday();
 
     public static void getClaimsPagesObjects(){
+        Allure.step("проверка");
         onView(isRoot()).perform(waitId(R.id.main_menu_image_button, 5000));
         onView(allOf(withId(R.id.add_new_claim_material_button))).check(matches(isDisplayed()));
         onView(allOf(withParent(allOf(withId(R.id.claim_list_card))))).check(matches(isDisplayed()));
@@ -94,6 +96,7 @@ public class ClaimsPage {
     }
 
     public static void checkClaimStatus(String status) {
+        Allure.step("статус");
         onView(allOf(withId(R.id.claim_list_filter_ok_material_button), withText("OK"))).perform(scrollTo(), click());
 
         onView(allOf(withId(R.id.claim_list_recycler_view),
@@ -105,6 +108,7 @@ public class ClaimsPage {
     }
 
     public static void chooseFilterCriteriaInClaims(String option) {
+        Allure.step("фильтр");
         onView(allOf(withId(R.id.filters_material_button), withContentDescription("Filter claim list menu button"))).check(matches(isDisplayed())).perform(click());
         onView(allOf(withParent(withParent(withId(com.google.android.material.R.id.custom))))).check(matches(isDisplayed()));
         onView(allOf(withId(R.id.claim_filter_dialog_title))).check(matches(withText("Filtering")));
@@ -156,6 +160,7 @@ public class ClaimsPage {
     static ViewInteraction cancelB = onView(allOf(withId(R.id.cancel_button)));
 
     public static void checkFieldsOnCreateClaimPagePresent() {
+        Allure.step("создать жалобу");
         onView(allOf(withId(R.id.custom_app_bar_sub_title_text_view), withText("Claims"))).check(matches(withText("Claims")));
         onView(allOf(withId(R.id.executor_drop_menu_text_input_layout))).check(matches(isDisplayed()));
         title.check(matches(isDisplayed()));
@@ -168,6 +173,7 @@ public class ClaimsPage {
     }
 
     public static void checkClaimData(int testNumber, boolean fillExecutor, String status) {
+        Allure.step("проверить дату");
         onView(allOf(withId(R.id.title_text_view)))
                 .check(matches(isDisplayed()))
                 .check(matches(withText("Title for test number " + testNumber)));
@@ -202,6 +208,7 @@ public class ClaimsPage {
     }
 
     public static void checkClaimDataOnClaimsPage(int testNumber) {
+        Allure.step("дата на странице");
         onView(
                 allOf(withId(R.id.description_material_text_view), withText("Title for test number " + testNumber)))
                 .check(matches(isDisplayed()))
@@ -214,6 +221,7 @@ public class ClaimsPage {
 
     public static void createNewClaim(Integer testNumber, boolean person) {
 //        is displayed
+        Allure.step("создать жалобу");
         onView(allOf(withId(R.id.add_new_claim_material_button))).perform(click());
         onView(allOf(withId(R.id.custom_app_bar_title_text_view), withText("Creating"))).check(matches(withText("Creating")));
         checkFieldsOnCreateClaimPagePresent();
@@ -252,6 +260,7 @@ public class ClaimsPage {
     }
 
     public static void addComment(String text) {
+        Allure.step("добавить коммент");
         onView(allOf(withId(R.id.add_comment_image_button)))
                 .check(matches(isDisplayed()))
                 .perform(click());
@@ -272,6 +281,7 @@ public class ClaimsPage {
     }
 
     public static void changeStatus(String currentStatus, String newStatus, String toNewStatus, String secStatus) {
+        Allure.step("поменять стаутс");
         onView(allOf(withId(R.id.status_label_text_view)))
                 .check(matches(isDisplayed()))
                 .check(matches(withText(currentStatus)));
@@ -288,6 +298,7 @@ public class ClaimsPage {
     }
 
     public static void editClaim(int testNumber, int newTestNumber, boolean person, boolean cancelled) {
+        Allure.step("редактировать жалобу");
         checkClaimData(testNumber, person, "Open");
         onView(allOf(withId(R.id.edit_processing_image_button)))
                 .check(matches(isDisplayed()));
@@ -306,6 +317,7 @@ public class ClaimsPage {
     }
 
     public void getErrorOnEmptyFields() {
+        Allure.step("ошибка пустых полей");
         onView(allOf(withId(R.id.add_new_claim_material_button)))
                 .check(matches(isDisplayed()))
                 .perform(click());

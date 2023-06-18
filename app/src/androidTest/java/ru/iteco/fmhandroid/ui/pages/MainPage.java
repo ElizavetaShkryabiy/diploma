@@ -23,6 +23,7 @@ import org.hamcrest.Matcher;
 
 import java.util.concurrent.TimeoutException;
 
+import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
 
 public class MainPage {
@@ -68,6 +69,7 @@ public class MainPage {
     }
 
     public static void getMainPagesObjects(){
+        Allure.step("проверить элементы");
         onView(isRoot()).perform(waitId(R.id.main_menu_image_button, 5000));
         onView(allOf(withId(R.id.news_list_recycler_view))).check(matches(isDisplayed()))
                 .perform(actionOnItemAtPosition(0, click()));
@@ -85,6 +87,7 @@ public class MainPage {
     }
 
     public static void allNewsRedirect(){
+        Allure.step("редирект на новости");
         onView(allOf(withId(R.id.all_news_text_view))).check(matches(isDisplayed())).perform(click());
         onView(allOf(withText("News"),
                 withParent(withParent(withId(R.id.container_list_news_include))),
@@ -92,6 +95,7 @@ public class MainPage {
     }
 
     public static void allClaimsRedirect(){
+        Allure.step("редирект на жалобы");
         onView(allOf(withId(R.id.all_claims_text_view))).check(matches(isDisplayed())).perform(click());
         onView(allOf(withText("Claims"),
                 withParent(withParent(withId(R.id.container_list_claim_include))),

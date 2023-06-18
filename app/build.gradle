@@ -112,4 +112,5 @@ dependencies {
     testImplementation "io.qameta.allure:allure-kotlin-model:2.8.0"
     testImplementation "io.qameta.allure:allure-kotlin-commons:2.8.0"
     testImplementation "io.qameta.allure:allure-kotlin-junit4:2.8.0"
+    androidTestUtil("androidx.test:orchestrator:1.4.2")
 }

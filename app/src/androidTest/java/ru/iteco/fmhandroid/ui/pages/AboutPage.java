@@ -19,6 +19,7 @@ import org.hamcrest.Matcher;
 
 import java.util.concurrent.TimeoutException;
 
+import io.qameta.allure.kotlin.Allure;
 import ru.iteco.fmhandroid.R;
 
 public class AboutPage {
@@ -64,6 +65,7 @@ public class AboutPage {
     }
 
     public static void getAboutPagesObjects(){
+        Allure.step("посмотреть элементы");
         onView(isRoot()).perform(waitId(R.id.main_menu_image_button, 5000));
         onView(allOf(withId(R.id.about_version_value_text_view))).check(matches(isDisplayed()));
         onView(allOf(withId(R.id.about_privacy_policy_label_text_view))).check(matches(isDisplayed()));

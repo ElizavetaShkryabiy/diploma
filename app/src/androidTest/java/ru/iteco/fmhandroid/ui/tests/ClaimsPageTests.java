@@ -3,6 +3,8 @@ package ru.iteco.fmhandroid.ui.tests;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,18 +38,16 @@ public class ClaimsPageTests {
     public ActivityScenarioRule<AppActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(AppActivity.class);
     @Rule
-    private String screenshotName;
-    private ScreenshotRule.Mode mode;
-    ScreenshotRule logcatRule = new ScreenshotRule(mode = ScreenshotRule.Mode.END, screenshotName = "ss_end");
+    ScreenshotRule logcatRule = new ScreenshotRule(ScreenshotRule.Mode.END, screenshotName = "ss_end");
 
-//    @Before
-//    public void login() {
-//        authPage.fillAuthFormFields("login2", "password2", "Dashboard");
-//    }
-//    @After
-//    public void logOut() {
-//        authPage.logOut();
-//    }
+    @Before
+    public void login() {
+        authPage.fillAuthFormFields("login2", "password2", "Dashboard");
+    }
+    @After
+    public void logOut() {
+        authPage.logOut();
+    }
 
     @Test
     public void claimsPageItemsDisplayedTest() {
